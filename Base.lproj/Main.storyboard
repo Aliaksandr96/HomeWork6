@@ -52,10 +52,10 @@
             </objects>
             <point key="canvasLocation" x="-17.39130434782609" y="114.50892857142857"/>
         </scene>
-        <!--Cats View Controller-->
+        <!--Cat View Controller-->
         <scene sceneID="DzF-2J-LEw">
             <objects>
-                <viewController id="plU-7K-2mB" customClass="CatsViewController" customModule="Home_work_6" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="plU-7K-2mB" customClass="CatViewController" customModule="Home_work_6" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="09W-Qi-YNR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,7 +87,7 @@
         <!--MoveCircleViewController-->
         <scene sceneID="zBx-br-3zB">
             <objects>
-                <viewController title="MoveCircleViewController" id="8hk-th-L22" customClass="MoveCirleViewController" customModule="Home_work_6" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="MoveCircleViewController" id="8hk-th-L22" customClass="MoveCircleVIewController" customModule="Home_work_6" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gvq-Iw-Bub">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

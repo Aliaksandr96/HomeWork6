@@ -6,88 +6,127 @@
 //
 
 import Foundation
-//
-//  SquareViewController.swift
-//  Home work 6
-//
-//  Created by Aliaksandr Hunko on 23/06/2022.
-//
-
-import Foundation
 import UIKit
 
-public final class MoveCirleViewController: UIViewController{
+public final class MoveCircleVIewController: UIViewController {
 
-private var movedButtonLeft: UIButton = UIButton()
-private var movedButtonDown: UIButton = UIButton()
-private var movedButtonUp: UIButton = UIButton()
-private var movedButtonRight: UIButton = UIButton()
-    private var label: UILabel = UILabel()
+    let ball: UIView = UIView()
+    let ballArea: UIView = UIView()
     
+       
+       // Creating coordinates of ball
+    var xBall = 0
+    var yBall = 0
+    let widthBall = 80
+    let heightBall = 80
+       // Ball  step
+    let step = 30
+       
+       // Movement buttons
+    let upButton: UIButton = UIButton()
+    let downButton: UIButton = UIButton()
+    let leftButton: UIButton = UIButton()
+    let rightButton: UIButton = UIButton()
+    
+    
+       
     public override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemYellow
-        
-    }
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        movedButtonLeft.frame = CGRect(x: 50, y: 750, width: 100, height: 50)
-        movedButtonDown.frame = CGRect(x: 160, y: 750, width: 100, height: 50)
-        movedButtonUp.frame = CGRect(x: 160, y: 690, width: 100, height: 50)
-        movedButtonRight.frame = CGRect(x: 270, y: 750, width: 100, height: 50)
-        label.frame = CGRect(x: 160, y: 400, width: 50, height: 50)
-        label.layer.cornerRadius = 25
-        label.clipsToBounds = true
-        
-        movedButtonLeft.setTitle("left", for: .normal)
-        movedButtonDown.setTitle("down", for: .normal)
-        movedButtonUp.setTitle("up", for: .normal)
-        movedButtonRight.setTitle("right", for: .normal)
-      movedButtonLeft.addTarget(self, action: #selector(moveLeft), for: .touchUpInside)
-        movedButtonDown.addTarget(self, action: #selector(moveDown), for: .touchUpInside)
-       movedButtonUp.addTarget(self, action: #selector(moveUp), for: .touchUpInside)
-       movedButtonRight.addTarget(self, action: #selector(moveRight), for: .touchUpInside)
-     
-        view.addSubview(movedButtonLeft)
-        view.addSubview(movedButtonDown)
-        view.addSubview(movedButtonUp)
-        view.addSubview(movedButtonRight)
-        view.addSubview(label)
-        
-        movedButtonLeft.backgroundColor = .red
-        self.view.addSubview(movedButtonLeft)
-        movedButtonDown.backgroundColor = .red
-        self.view.addSubview(movedButtonDown)
-        movedButtonUp.backgroundColor = .red
-       self.view.addSubview(movedButtonUp)
-        movedButtonRight.backgroundColor = .red
-       self.view.addSubview(movedButtonRight)
-        label.backgroundColor = .blue
-        self.view.addSubview(label)
-        label.center = view.center
-    }
-    
-
-    override public func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-    }
-
-    @objc func moveLeft() {
-           label.frame = CGRect(x: 80, y: 400, width: 50, height: 50)
+           super.viewDidLoad()
+        view.backgroundColor = .darkGray
        }
-    
-    @objc func moveUp() {
-           label.frame = CGRect(x: 180, y: 300, width: 50, height: 50)
+       
+       public override func viewDidAppear(_ animated: Bool) {
+           super.viewDidAppear(animated)
+           
+           // Width and heigth controll buttons
+    let widthBtn = 80
+    let heightBtn = 80
+           // Create area for ball
+    let widthArea = Int(view.bounds.width)
+    let heightArea = Int(view.bounds.height) - (heightBtn * 5)
+           // ball area .ball params
+           ballArea.frame = CGRect(x: 0, y: 0, width: widthArea, height: heightArea)
+           ballArea.backgroundColor = randomColor()
+           view.addSubview(ballArea)
+           xBall = (Int(ballArea.bounds.width) / 2) - (widthBall / 2)
+           yBall = (Int(ballArea.bounds.height) / 2) - (heightBall / 2)
+           ball.frame = CGRect(x: xBall, y: yBall, width: widthBall, height: heightBall)
+           ball.backgroundColor = randomColor()
+           ball.layer.cornerRadius = ball.bounds.height / 2
+           ballArea.addSubview(ball)
+           
+           // button  params
+    let xUpBtn = (Int(view.bounds.width) / 2) - (widthBtn / 2)
+    let yUpBtn = Int(view.bounds.height) - (heightBtn * 4)
+           upButton.frame = CGRect(x: xUpBtn, y: yUpBtn, width: widthBtn, height: heightBtn)
+           upButton.backgroundColor = .gray
+           upButton.layer.cornerRadius = upButton.bounds.height / 2
+           upButton.addTarget(self, action: #selector(moveUp), for: .touchUpInside)
+           upButton.setTitle("UP", for: .normal)
+           view.addSubview(upButton)
+    let xDownBtn = (Int(view.bounds.width) / 2) - (widthBtn / 2)
+    let yDownBtn = Int(view.bounds.height) - (heightBtn * 2)
+           downButton.frame = CGRect(x: xDownBtn, y: yDownBtn, width: widthBtn, height: heightBtn)
+           downButton.backgroundColor = .gray
+           downButton.layer.cornerRadius = downButton.bounds.height / 2
+           downButton.addTarget(self, action: #selector(moveDown), for: .touchUpInside)
+           downButton.setTitle("DOWN", for: .normal)
+           view.addSubview(downButton)
+    let xLeftBtn = (Int(view.bounds.width) / 2) - widthBtn - (widthBtn / 2)
+    let yLeftBtn = Int(view.bounds.height) - (heightBtn * 3)
+           leftButton.frame = CGRect(x: xLeftBtn, y: yLeftBtn, width: widthBtn, height: heightBtn)
+           leftButton.backgroundColor = .gray
+           leftButton.layer.cornerRadius = leftButton.bounds.height / 2
+           leftButton.addTarget(self, action: #selector(moveLeft), for: .touchUpInside)
+           leftButton.setTitle("LEFT", for: .normal)
+           view.addSubview(leftButton)
+    let xRightBtn = (Int(view.bounds.width) / 2) + widthBtn - (widthBtn / 2)
+    let yRightBtn = Int(view.bounds.height) - (heightBtn * 3)
+           rightButton.frame = CGRect(x: xRightBtn, y: yRightBtn, width: widthBtn, height: heightBtn)
+           rightButton.backgroundColor = .gray
+           rightButton.layer.cornerRadius = rightButton.bounds.height / 2
+           rightButton.addTarget(self, action: #selector(moveRight), for: .touchUpInside)
+           rightButton.setTitle("RIGHT", for: .normal)
+           view.addSubview(rightButton)
        }
-    @objc func moveDown() {
-           label.frame = CGRect(x: 180, y: 500, width: 50, height: 50)
+       
+       // ball movement
+       @objc func moveUp() {
+           if yBall > (Int(ballArea.frame.minY) + step) {
+               yBall -= step
+           }
+           ball.frame = CGRect(x: xBall, y: yBall, width: widthBall, height: heightBall)
        }
-    @objc func moveRight() {
-           label.frame = CGRect(x: 300, y: 400, width: 50, height: 50)
-       }
-    
- 
-
-}
+       @objc func moveDown() {
+           if yBall < ((Int(ballArea.frame.maxY) - heightBall) - step)  {
+               yBall += step
+           }
+           ball.frame = CGRect(x: xBall, y: yBall, width: widthBall, height: heightBall)
+                  }
+                  @objc func moveLeft() {
+                      if xBall > (Int(ballArea.frame.minX) + step)  {
+                          xBall -= step
+                      }
+                      ball.frame = CGRect(x: xBall, y: yBall, width: widthBall, height: heightBall)
+                  }
+                  @objc func moveRight() {
+                      if xBall < ((Int(ballArea.frame.maxX) - heightBall) - step)  {
+                          xBall += step
+                      }
+                      ball.frame = CGRect(x: xBall, y: yBall, width: widthBall, height: heightBall)
+                  }
+               // random color
+               func randomColor() -> UIColor {
+                   switch Int.random(in: 1...8) {
+                   case 1: return UIColor.red
+                   case 2: return UIColor.systemCyan
+                   case 3: return UIColor.orange
+                   case 4: return UIColor.brown
+                   case 5: return UIColor.blue
+                   case 6: return UIColor.systemFill
+                   case 7: return UIColor.systemMint
+                   case 8: return UIColor.yellow
+                   default: return UIColor.systemRed
+                   }
+               }
+              }
